@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Text, TouchableOpacity, View, TextInput, SafeAreaView, FlatList } from 'react-native';
 
 const dummyData = [
@@ -9,23 +9,43 @@ const dummyData = [
 
 const ShoppingList = props => {
 
+    const [ text, setText ] = useState('');
+    const [ shoppingList, setShoppingList ] = useState([]);
+
+    const onChangeText_Item = (text) => {
+        setText(text);
+    }
+
+    const onPress_Add = () => {
+        let copyShoppingList = [...shoppingList];
+        copyShoppingList.push(text);
+        setShoppingList(copyShoppingList);
+    }
+    const onPress_Delete = () => {
+        let copyShoppingList = [...shoppingList];
+        copyShoppingList.pop(text);
+        setShoppingList(copyShoppingList);
+    }
     const renderItem = (params) => {
         const item = params.item;
 
         return (
-            <Text style={styles.itemText}>{item}</Text>
+            <Text style={styles.itemText} onPress={onPress_Delete}>{item}</Text>
         )
     }
 
     return (
         <SafeAreaView style={styles.container}>
-            <TextInput style={styles.input} placeholder={"İtem adı yaz"} />
-            <TouchableOpacity style={styles.button}>
-                <Text style={styles.buttonText}>EKLE</Text>
+            <TextInput
+                style={styles.input}
+                placeholder={"İtem adı yaz"} 
+                onChangeText={onChangeText_Item}/>
+            <TouchableOpacity style={styles.button} onPress={onPress_Add}>
+                <Text style={styles.buttonText} >EKLE</Text>
             </TouchableOpacity>
             <View style={styles.listContainer}>
                 <FlatList
-                    data={dummyData}
+                    data={shoppingList}
                     renderItem={renderItem}
                     keyExtractor={(item, index) => { return index; }}
                 />
@@ -74,6 +94,7 @@ const styles = {
     itemText: {
         fontSize: 16,
         marginBottom: 5,
+        color:'black',
     },
 };
 

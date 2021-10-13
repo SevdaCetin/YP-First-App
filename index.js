@@ -13,8 +13,12 @@ import App4 from './StylingLayout/App4';
 
 import HomeScreen from './CoreComponents/HomeScreen';
 import ShoppingList from './CoreComponents/ShoppingList';
+import ShpList from './CoreComponents/ShpList';
 
+import Counter from './State/Counter';
+import RenderFunc from './State/RenderFunc';
 import {name as appName} from './app.json';
 
 
-AppRegistry.registerComponent(appName, () => HomeScreen);
+
+AppRegistry.registerComponent(appName, () => ShpList);
